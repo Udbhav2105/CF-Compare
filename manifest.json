@@ -1,0 +1,26 @@
+{
+    "name": "CF Compare",
+    "version": "1.0.0.0",
+    "manifest_version": 3,
+    "description": "Compare your problem solved graph!",
+    "icons": {
+        "128": "icons/Icon128x128.png"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+        "host_permissions": [
+        "https://codeforces.com/*"
+    ],
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting"
+    ],
+    "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"]
+    }
+]
+}
