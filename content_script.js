@@ -45,9 +45,10 @@ function transformRatings(ratings) {
     return ratingObjects;
 }
 
-async function displayRatings() {
+async function displayRatings(username1,username2) {
     try {
-        const userHandles = ['vaibhavveerwaal', 'Udbhav_k'];
+        // const userHandles = ['vaibhavveerwaal', 'Udbhav_k'];
+        const userHandles = [username1, username2];
         const ratingsMap = await getSolvedProblemsByRating(userHandles);
 
         const margin = { top: 20, right: 30, bottom: 40, left: 60 },
@@ -127,4 +128,29 @@ async function displayRatings() {
     }
 }
 
-displayRatings();
+
+const form = document.getElementById('username-form');
+const usernameInput1 = document.getElementById('username-input1');
+const usernameInput2 = document.getElementById('username-input2');
+const graph = document.getElementById("graph");
+const legend = document.getElementById('legend');
+//   const usernameDisplay = document.getElementById('username-display');
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form from submitting traditionally
+    graph.innerHTML = "";
+    legend.innerHTML = "";
+    const username1 = usernameInput1.value;
+    const username2 = usernameInput2.value;
+    // Perform actions with the username, such as displaying or storing it
+    // usernameDisplay.textContent = `Username: ${username}`;
+    
+    // Example: Store username in localStorage
+    displayRatings(username1,username2);
+    // chrome.storage.local.set({username1: username1}, function() {
+    //     console.log('Username saved:', username1);
+    // });
+    // chrome.storage.local.set({username2: username2}, function() {
+    //     console.log('Username saved:', username2);
+    // });
+});
