@@ -247,6 +247,7 @@ try {
     
     document.getElementById('submitUserProfile').addEventListener('click', (event) => {
         event.preventDefault();
+        location.reload();
         const username = document.getElementById('username').value;
         defaultName = username;
         document.getElementById('userProfile').innerText = defaultName;
