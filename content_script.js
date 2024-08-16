@@ -134,23 +134,66 @@ const usernameInput1 = document.getElementById('username-input1');
 const usernameInput2 = document.getElementById('username-input2');
 const graph = document.getElementById("graph");
 const legend = document.getElementById('legend');
-//   const usernameDisplay = document.getElementById('username-display');
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form from submitting traditionally
-    graph.innerHTML = "";
-    legend.innerHTML = "";
-    const username1 = usernameInput1.value;
-    const username2 = usernameInput2.value;
-    // Perform actions with the username, such as displaying or storing it
-    // usernameDisplay.textContent = `Username: ${username}`;
-    
-    // Example: Store username in localStorage
-    displayRatings(username1,username2);
-    // chrome.storage.local.set({username1: username1}, function() {
-    //     console.log('Username saved:', username1);
-    // });
-    // chrome.storage.local.set({username2: username2}, function() {
-    //     console.log('Username saved:', username2);
-    // });
+const browserAPI = window.chrome || window.browser;
+
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const tabs = await new Promise((resolve, reject) => {
+            browserAPI.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                } else {
+                    resolve(tabs);
+                }
+            });
+        });
+
+        let currentTab = tabs[0];
+        let url = currentTab.url;
+        // const urlDisplayElement = document.getElementById('urlDisplay');
+        // if (urlDisplayElement) {
+        //     urlDisplayElement.textContent = url;
+
+            // Check URL to determine action
+            const urlSplitted = url.split('/');
+            if (urlSplitted[2] === 'codeforces.com' && 'Udbhav_k' !== urlSplitted[urlSplitted.length-1]) {
+                // alert("codeforces");
+                form.style.display = 'none';
+                const to_be_compared_with = urlSplitted[urlSplitted.length - 1];
+                displayRatings('Udbhav_k', to_be_compared_with);
+                
+                const compareButton = document.createElement('button');
+                compareButton.textContent = 'Compare More';
+                form.insertAdjacentElement('afterend', compareButton);
+                compareButton.addEventListener('click', function () {
+                    form.style.display = 'block';
+                    compareButton.style.display = 'none';
+                });
+                
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    graph.innerHTML = "";
+                    legend.innerHTML = "";
+                    const username1 = usernameInput1.value;
+                    const username2 = usernameInput2.value;
+                    displayRatings(username1, username2);
+                });
+            } else {
+                // alert("not codeforces");
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    graph.innerHTML = "";
+                    legend.innerHTML = "";
+                    const username1 = usernameInput1.value;
+                    const username2 = usernameInput2.value;
+                    displayRatings(username1, username2);
+                });
+            }
+        // } else {
+        //     console.error('Element with id "urlDisplay" not found');
+        // }
+    } catch (error) {
+        console.error('Error fetching URL or processing tabs:', error);
+    }
 });
