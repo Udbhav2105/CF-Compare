@@ -9,19 +9,24 @@
 </head>
 
 <body>
-
-    <form id="username-form">
-        <input type="text" id="username-input1" placeholder="Username 1" required />
-        <input type="text" id="username-input2" placeholder="Username 2" required />
-        <button type="submit">Submit</button>
-    </form>
-
-    <button id="userProfile" onclick="setUp()">Profile</button>
-    <form id="userProfileInput"><input type="text" id="username" placeholder="Enter your Username" /><button
-            type='submit' id="submitUserProfile">Submit</button></form>
-            
-    <svg id="graph" width="800" height="400"></svg>
-    <div id="legend" class="legend"></div>
+    <div class="container">
+        <div class="top">
+            <form id="username-form">
+                <input type="text" id="username-input1" placeholder="Username 1" required />
+                <input type="text" id="username-input2" placeholder="Username 2" required />
+                <button class="button-33" id="submit">Submit</button>
+            </form>
+        
+            <button class="button-33" id="userProfile" >Profile</button>
+            <form id="userProfileInput">
+                <input type="text" id="username" placeholder="Enter your Username" />
+                <button type='submit' id="submitUserProfile">Submit</button>
+            </form>
+        </div>
+                
+        <svg id="graph" width="700" height="300"></svg>
+        <div id="legend" class="legend"></div>
+    </div>
     <script src="./d3.v7.min.js"></script>
     <script src="content_script.js"></script>
 </body>
