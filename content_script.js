@@ -181,12 +181,22 @@ try {
     const urlSplitted = url.split('/');
     if (urlSplitted[2] === 'codeforces.com' && defaultUserName !== urlSplitted[urlSplitted.length-1]) {
         // Codeforces 
+        document.getElementById('userProfile').addEventListener('click',(event)=>{
+            event.preventDefault();
+            document.getElementById('username-form').style.display = 'none';
+
+        })
         form.style.display = 'none';
         const to_be_compared_with = urlSplitted[urlSplitted.length - 1];
         displayRatings(defaultUserName, to_be_compared_with);
         
         
         const compareButton = document.createElement('button');
+        document.getElementById('submitUserProfile').addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById('username-form').style.display = 'none';
+            compareButton.style.display = 'block';
+        });
         compareButton.textContent = 'Compare More';
         compareButton.classList.add('button-33');
         form.insertAdjacentElement('afterend', compareButton);
@@ -205,6 +215,16 @@ try {
             });
         } else {
             // Not Codeforces
+            document.getElementById('userProfile').addEventListener('click',(event)=>{
+                event.preventDefault();
+                document.getElementById('username-form').style.display = 'none';
+                
+            })
+            document.getElementById('submitUserProfile').addEventListener('click', (event) => {
+                event.preventDefault();
+                document.getElementById('username-form').style.display = 'block';
+            });
+
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
                 graph.innerHTML = "";
@@ -215,8 +235,8 @@ try {
             });
         }
     }   catch (error) {
-    console.error('Error fetching URL or processing tabs:', error);
-        }
+        console.error('Error fetching URL or processing tabs:', error);
+    }
     });
 
     
