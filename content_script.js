@@ -188,6 +188,7 @@ try {
         
         const compareButton = document.createElement('button');
         compareButton.textContent = 'Compare More';
+        compareButton.classList.add('button-33');
         form.insertAdjacentElement('afterend', compareButton);
         compareButton.addEventListener('click', function () {
             form.style.display = 'block';
