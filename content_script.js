@@ -47,7 +47,6 @@ function transformRatings(ratings) {
 
 async function displayRatings(username1,username2) {
     try {
-        // const userHandles = ['vaibhavveerwaal', 'Udbhav_k'];
         const userHandles = [username1, username2];
         const ratingsMap = await getSolvedProblemsByRating(userHandles);
 
@@ -137,63 +136,81 @@ const legend = document.getElementById('legend');
 
 const browserAPI = window.chrome || window.browser;
 
+
+let defaultName = '';
+const defaultUserName = document.getElementById('userProfile').textContent;
+document.getElementById('userProfileInput').style.display = 'none';
+document.getElementById('userProfile').addEventListener('click',() =>{
+    document.getElementById('userProfileInput').style.display = 'block';
+})
+document.getElementById('submitUserProfile').addEventListener('click',(event)=>{
+    event.preventDefault();
+    defaultName = document.getElementById('username').value;
+
+    document.getElementById('userProfile').innerText = defaultName;
+    // alert(defaultUserName);
+})
+
 document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        const tabs = await new Promise((resolve, reject) => {
-            browserAPI.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                if (chrome.runtime.lastError) {
-                    reject(chrome.runtime.lastError);
-                } else {
-                    resolve(tabs);
-                }
+        try {
+            const tabs = await new Promise((resolve, reject) => {
+                browserAPI.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    } else {
+                        resolve(tabs);
+                    }
+                });
             });
-        });
-
-        let currentTab = tabs[0];
-        let url = currentTab.url;
-        // const urlDisplayElement = document.getElementById('urlDisplay');
-        // if (urlDisplayElement) {
-        //     urlDisplayElement.textContent = url;
-
-            // Check URL to determine action
-            const urlSplitted = url.split('/');
-            if (urlSplitted[2] === 'codeforces.com' && 'Udbhav_k' !== urlSplitted[urlSplitted.length-1]) {
-                // alert("codeforces");
-                form.style.display = 'none';
-                const to_be_compared_with = urlSplitted[urlSplitted.length - 1];
-                displayRatings('Udbhav_k', to_be_compared_with);
-                
-                const compareButton = document.createElement('button');
-                compareButton.textContent = 'Compare More';
-                form.insertAdjacentElement('afterend', compareButton);
-                compareButton.addEventListener('click', function () {
-                    form.style.display = 'block';
-                    compareButton.style.display = 'none';
-                });
-                
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    graph.innerHTML = "";
-                    legend.innerHTML = "";
-                    const username1 = usernameInput1.value;
-                    const username2 = usernameInput2.value;
-                    displayRatings(username1, username2);
-                });
-            } else {
-                // alert("not codeforces");
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    graph.innerHTML = "";
-                    legend.innerHTML = "";
-                    const username1 = usernameInput1.value;
-                    const username2 = usernameInput2.value;
-                    displayRatings(username1, username2);
-                });
-            }
-        // } else {
-        //     console.error('Element with id "urlDisplay" not found');
-        // }
-    } catch (error) {
-        console.error('Error fetching URL or processing tabs:', error);
-    }
-});
+            
+            // alert('test');
+            let currentTab = tabs[0];
+            let url = currentTab.url;
+            // const urlDibsplayElement = document.getElementById('urlDisplay');
+            // if (urlDisplayElement) {
+            //     urlDisplayElement.textContent = url;
+    
+                // Check URL to determine action            
+                const urlSplitted = url.split('/');
+                // c
+                if (urlSplitted[2] === 'codeforces.com' && defaultUserName !== urlSplitted[urlSplitted.length-1]) {
+                    // alert("codeforces");
+                    form.style.display = 'none';
+                    const to_be_compared_with = urlSplitted[urlSplitted.length - 1];
+                    displayRatings(defaultUserName, to_be_compared_with);
+                    
+                    
+                    const compareButton = document.createElement('button');
+                    compareButton.textContent = 'Compare More';
+                    form.insertAdjacentElement('afterend', compareButton);
+                    compareButton.addEventListener('click', function () {
+                        form.style.display = 'block';
+                        compareButton.style.display = 'none';
+                    });
+                    
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        graph.innerHTML = "";
+                        legend.innerHTML = "";
+                        const username1 = usernameInput1.value;
+                        const username2 = usernameInput2.value;
+                        displayRatings(username1, username2);
+                    });
+                } else {
+                    // alert("not codeforces");
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        graph.innerHTML = "";
+                        legend.innerHTML = "";
+                        const username1 = usernameInput1.value;
+                        const username2 = usernameInput2.value;
+                        displayRatings(username1, username2);
+                    });
+                }
+            // } else {
+            //     console.error('Element with id "urlDisplay" not found');
+            // }
+        } catch (error) {
+            console.error('Error fetching URL or processing tabs:', error);
+        }
+    });
