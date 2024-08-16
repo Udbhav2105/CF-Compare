@@ -1,28 +1,91 @@
-.bar {
-    fill-opacity: 0.8;
+.container {
+    overflow: hidden;
+    width: 100%;
+    padding: 20px;
+    background-color: #f0f4f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
 }
-.bar:hover {
-    fill-opacity: 1;
+
+/* Top bar layout */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e6e9ef;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
-.axis-label {
-    font: 14px sans-serif;
+
+/* Styling for forms */
+form {
+    display: flex;
+    align-items: center;
 }
-.x-axis path, .x-axis line {
-    fill: none;
-    shape-rendering: crispEdges;
+
+#username-form {
+    gap: 10px;
 }
+
+#userProfileInput {
+    display: none; /* Hidden by default, you can adjust when to show */
+}
+
+/* Button styling */
+.button-33 {
+    margin: 10px;
+    background-color: #b3d3ea;
+    border-radius: 10px;
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, .10);
+    color: #2c5777;
+    cursor: pointer;
+    padding: 7px 20px;
+    text-align: center;
+    font-size: 16px;
+    transition: all 250ms;
+    border: 0;
+}
+
+.button-33:hover {
+    box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+    transform: scale(1.05) rotate(-1deg);
+}
+
+/* Input field styling */
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 150px;
+}
+
+/* Legend styling */
 .legend {
     font-size: 14px;
     display: flex;
     margin-top: 10px;
 }
+
 .legend-item {
     margin-right: 20px;
     display: flex;
     align-items: center;
 }
+
 .legend-color {
     width: 20px;
     height: 20px;
     margin-right: 8px;
+}
+
+/* SVG graph styling */
+svg {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
